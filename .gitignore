@@ -1,0 +1,7 @@
+.env
+.virtualenv
+.vscode
+desktop.ini
+
+data/
+download/
