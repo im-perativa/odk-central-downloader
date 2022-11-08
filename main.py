@@ -11,14 +11,14 @@ import typer
 
 app = typer.Typer()
 config = dotenv_values('.env')
-
+config['URL'] = config['URL'][:-1] if config['URL'].endswith('/') else config['URL']
 
 @app.command()
 def main(form_name: str):
     print(f'Downloading {form_name}')
 
     DATA_DIR = os.path.join('data', form_name)
-    URL = f'https://odkx.stis.ac.id/v1/projects/1/forms/{form_name}/submissions.csv.zip?groupPaths=false'
+    URL = f'{config["URL"]}/v1/projects/{config["PROJECT_ID"]}/forms/{form_name}/submissions.csv.zip?groupPaths=false'
     FILENAME = os.path.join('download', f'{form_name}.zip')
 
     res = requests.get(URL, stream=True, auth=HTTPBasicAuth(config['USERNAME'], config['PASSWORD']))
